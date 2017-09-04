@@ -1,6 +1,6 @@
 <?php
 /*
- *  Author: Todd Motto | @toddmotto
+ *  Author: Nate Vandervis | @natewich
  *  URL: html5blank.com | @html5blank
  *  Custom functions, support, custom post types and more.
  */
@@ -345,7 +345,8 @@ add_action('wp_print_scripts', 'html5blank_conditional_scripts'); // Add Conditi
 add_action('get_header', 'enable_threaded_comments'); // Enable Threaded Comments
 add_action('wp_enqueue_scripts', 'html5blank_styles'); // Add Theme Stylesheet
 add_action('init', 'register_html5_menu'); // Add HTML5 Blank Menu
-add_action('init', 'create_post_type_html5'); // Add our HTML5 Blank Custom Post Type
+add_action('init', 'create_post_type_mixes'); // Add our Mixes Post Type
+add_action('init', 'create_post_type_shows'); // Add our Mixes Post Type
 add_action('widgets_init', 'my_remove_recent_comments_style'); // Remove inline Recent Comment Styles from wp_head()
 add_action('init', 'html5wp_pagination'); // Add our HTML5 Pagination
 
@@ -395,26 +396,63 @@ add_shortcode('html5_shortcode_demo_2', 'html5_shortcode_demo_2'); // Place [htm
 	Custom Post Types
 \*------------------------------------*/
 
-// Create 1 Custom Post type for a Demo, called HTML5-Blank
-function create_post_type_html5()
+// Mixes Custom Post Type
+function create_post_type_mixes()
 {
-    register_taxonomy_for_object_type('category', 'html5-blank'); // Register Taxonomies for Category
-    register_taxonomy_for_object_type('post_tag', 'html5-blank');
-    register_post_type('html5-blank', // Register Custom Post Type
+    register_taxonomy_for_object_type('category', 'mixes'); // Register Taxonomies for Category
+    register_taxonomy_for_object_type('post_tag', 'mixes');
+    register_post_type('mixes', // Register Custom Post Type
         array(
         'labels' => array(
-            'name' => __('HTML5 Blank Custom Post', 'html5blank'), // Rename these to suit
-            'singular_name' => __('HTML5 Blank Custom Post', 'html5blank'),
-            'add_new' => __('Add New', 'html5blank'),
-            'add_new_item' => __('Add New HTML5 Blank Custom Post', 'html5blank'),
-            'edit' => __('Edit', 'html5blank'),
-            'edit_item' => __('Edit HTML5 Blank Custom Post', 'html5blank'),
-            'new_item' => __('New HTML5 Blank Custom Post', 'html5blank'),
-            'view' => __('View HTML5 Blank Custom Post', 'html5blank'),
-            'view_item' => __('View HTML5 Blank Custom Post', 'html5blank'),
-            'search_items' => __('Search HTML5 Blank Custom Post', 'html5blank'),
-            'not_found' => __('No HTML5 Blank Custom Posts found', 'html5blank'),
-            'not_found_in_trash' => __('No HTML5 Blank Custom Posts found in Trash', 'html5blank')
+            'name' => __('Mixes', 'mixes'),
+            'singular_name' => __('Mix', 'mixes'),
+            'add_new' => __('Add Mix', 'mixes'),
+            'add_new_item' => __('Add New Mix', 'mixes'),
+            'edit' => __('Edit', 'mixes'),
+            'edit_item' => __('Edit Mix', 'mixes'),
+            'new_item' => __('New Mix', 'mixes'),
+            'view' => __('View Mix', 'mixes'),
+            'view_item' => __('View Mix', 'mixes'),
+            'search_items' => __('Search Mixes', 'mixes'),
+            'not_found' => __('No Mixes found', 'mixes'),
+            'not_found_in_trash' => __('No Mixes found in Trash', 'mixes')
+        ),
+        'public' => true,
+        'hierarchical' => true, // Allows your posts to behave like Hierarchy Pages
+        'has_archive' => true,
+        'supports' => array(
+            'title',
+            'editor',
+            'thumbnail'
+        ),
+        'can_export' => true, // Allows export in Tools > Export
+        'taxonomies' => array(
+            'post_tag',
+            'category'
+        ) // Add Category and Post Tags support
+    ));
+}
+
+// Shows Custom Post Type
+function create_post_type_shows()
+{
+    register_taxonomy_for_object_type('category', 'shows'); // Register Taxonomies for Category
+    register_taxonomy_for_object_type('post_tag', 'shows');
+    register_post_type('shows', // Register Custom Post Type
+        array(
+        'labels' => array(
+            'name' => __('Shows', 'shows'),
+            'singular_name' => __('Show', 'shows'),
+            'add_new' => __('Add Show', 'shows'),
+            'add_new_item' => __('Add New Show', 'shows'),
+            'edit' => __('Edit', 'shows'),
+            'edit_item' => __('Edit Show', 'shows'),
+            'new_item' => __('New Show', 'shows'),
+            'view' => __('View Show', 'shows'),
+            'view_item' => __('View Show', 'shows'),
+            'search_items' => __('Search Shows', 'shows'),
+            'not_found' => __('No Shows found', 'shows'),
+            'not_found_in_trash' => __('No Shows found in Trash', 'shows')
         ),
         'public' => true,
         'hierarchical' => true, // Allows your posts to behave like Hierarchy Pages
@@ -424,7 +462,7 @@ function create_post_type_html5()
             'editor',
             'excerpt',
             'thumbnail'
-        ), // Go to Dashboard Custom HTML5 Blank post for supports
+        ),
         'can_export' => true, // Allows export in Tools > Export
         'taxonomies' => array(
             'post_tag',

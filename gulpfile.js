@@ -19,7 +19,8 @@ const
   deporder      = require('gulp-deporder'),
   concat        = require('gulp-concat'),
   stripdebug    = require('gulp-strip-debug'),
-  uglify        = require('gulp-uglify')
+  uglify        = require('gulp-uglify'),
+  jslint        = require('gulp-jslint')
 ;
 
 // Browser-sync
@@ -106,6 +107,16 @@ gulp.task('js', () => {
 
 });
 
+// JavaScript Linting
+gulp.task('lint', () => {
+  return gulp.src([js.src])
+    .pipe(jslint({ /* this object represents the JSLint directives being passed down */ }))
+    .pipe(jslint.reporter('lint', errorsOnly))
+    .pipe(jslint.reporter('stylish', options));
+});
+
+
+// Build task
 gulp.task('build', ['php', 'css', 'js']);
 
 // // Browsersync options
